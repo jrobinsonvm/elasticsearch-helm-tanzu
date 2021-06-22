@@ -58,7 +58,7 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 
-image: "docker.elastic.co/elasticsearch/elasticsearch"
+image: "docker.elastic.co/elasticsearch/elasticsearch" #Changeme
 imageTag: "7.13.2"
 imagePullPolicy: "IfNotPresent"
 
@@ -78,7 +78,7 @@ esJavaOpts: "" # example: "-Xmx1g -Xms1g"
 #     cpu: "1000m"
 #     memory: "2Gi"
 
-resources:
+resources: #Changeme
   requests:
     cpu: "250m"
     memory: "0.5Gi"
@@ -247,16 +247,12 @@ ingress:
     kubernetes.io/force-ssl-redirect: "true"
     kubernetes.io/backend-protocol: "HTTPS"
   hosts:
-    - host: dev.es.haas-401.pez.vmware.com 
+    - host: dev.es.haas-401.pez.vmware.com #Changeme
       paths:
       - backend: 
           # serviceName: elasticsearch-master
           # servicePort: 9200
         path: /
-  tls: 
-    - secretName: secret-tls
-      hosts:
-        - dev.es.haas-401.pez.vmware.com
 
 nameOverride: ""
 fullnameOverride: ""
