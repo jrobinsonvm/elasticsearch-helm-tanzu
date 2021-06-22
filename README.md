@@ -1,51 +1,51 @@
-Setup Elasticsearch via Helm Chart using Project Contour ingress 
+# Setup Elasticsearch via Helm Chart using Project Contour ingress 
 
-# Provision TKG Cluster  
+### Provision TKG Cluster  
 
-# Login to TKG Cluster 
+### Login to TKG Cluster 
 
-# Create cluster role binding to allow workload deployments 
+### Create cluster role binding to allow workload deployments 
 
 kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated
 
 
-# Deploy Project Contour: 
+### Deploy Project Contour: 
 kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
-# Setup DNS to point to Project Contour's Envoy Service IP Address 
-# Setup A Record which points to the IP Address 
-# Make the A Record a wild card DNS 
-# Example: *.elasticsearch.mydomain.com ---> IP Address  
+### Setup DNS to point to Project Contour's Envoy Service IP Address 
+### Setup A Record which points to the IP Address 
+### Make the A Record a wild card DNS 
+### Example: *.elasticsearch.mydomain.com ---> IP Address  
 
-# Fetch the Elasticsearch Helm Chart to make changes 
-# https://github.com/elastic/helm-charts/tree/master/elasticsearch
+### Fetch the Elasticsearch Helm Chart to make changes 
+### https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
 helm fetch elastic/elasticsearch --untar
 
-# Change Directories to Elasticsearch 
+### Change Directories to Elasticsearch 
 cd elasticsearch
 
-# 
-# Open and edit the values.yaml file 
-# After line 92 add the following line.  
+### 
+### Open and edit the values.yaml file 
+### After line 92 add the following line.  
 
    ```storageClassName: pacific-gold-storage-policy```
-# 
-# Example: 
-# volumeClaimTemplate:
-#   accessModes: [ "ReadWriteOnce" ]
-#   storageClassName: pacific-gold-storage-policy
-#   resources:
-#     requests:
-#       storage: 30Gi
+ 
+### Example: 
+### volumeClaimTemplate:
+###   accessModes: [ "ReadWriteOnce" ]
+###   storageClassName: pacific-gold-storage-policy
+###   resources:
+###     requests:
+###       storage: 30Gi
  
 
-# Now navigate to the ingress class on line 235 
-# Change Ingress enabled to "true"
+### Now navigate to the ingress class on line 235 
+### Change Ingress enabled to "true"
 
-# Uncomment the ingress.class annotation below and change nginx to contour 
+### Uncomment the ingress.class annotation below and change nginx to contour 
 
-# Modify the Host variable to match your desired FQDN and the DNS entry which was setup earlier. 
+### Modify the Host variable to match your desired FQDN and the DNS entry which was setup earlier. 
 
 # Match the following example below to include your backend service name and port.  
 # Example: 
