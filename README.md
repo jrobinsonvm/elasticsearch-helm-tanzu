@@ -70,14 +70,19 @@
    Make a copy of the values.yaml file and call it master-values.yaml for the master node roles.   
 
 9. Create Namespace for Elasticsearch 
-```kubectl create ns elk ```
+```
+kubectl create ns elk 
+```
 
 10. Deploy Elasticsearch to test basic setup functionality 
 
-```helm install elk . -n elk  -f master-values.yaml```
+``` 
+helm install elk . -n elk  -f master-values.yaml 
+```
 
-    Your Elasticsearch Master nodes should now appear.   
+Your Elasticsearch Master nodes should now appear.   
 ### Example: 
+
 ```
  jamesro@jamesro-a01 elasticsearch % kubectl get pods --namespace=elk -l app=elasticsearch-master -w
  NAME                     READY   STATUS    RESTARTS   AGE
