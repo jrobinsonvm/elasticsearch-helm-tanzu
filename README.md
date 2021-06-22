@@ -6,11 +6,15 @@
 
 
 1. Create cluster role binding to allow workload deployments 
-```kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated```
+```
+kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated
+```
 
 
 2. Deploy Project Contour: 
-```kubectl apply -f https://projectcontour.io/quickstart/contour.yaml```
+```
+kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
+```
 
 3. Setup DNS to point to Project Contour's Envoy Service IP Address 
 ``` Setup A Record which points to the IP Address 
@@ -21,15 +25,21 @@
 4.  Now Fetch the Elasticsearch Helm Chart to make changes 
 * https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
-```helm fetch elastic/elasticsearch --untar```
+```
+helm fetch elastic/elasticsearch --untar
+```
 
 5.  Change Directories to Elasticsearch 
-```cd elasticsearch```
+```
+cd elasticsearch
+```
 
 6.  Open and edit the values.yaml file to include the storageClassName
    
     After line 92 add the following line.  
-   ```storageClassName: pacific-gold-storage-policy```
+   ```
+   storageClassName: pacific-gold-storage-policy
+   ```
  
 ### Example: 
 ```
