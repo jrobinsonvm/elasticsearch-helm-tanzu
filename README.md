@@ -12,60 +12,56 @@
 2. Deploy Project Contour: 
 ```kubectl apply -f https://projectcontour.io/quickstart/contour.yaml```
 
-## Setup DNS to point to Project Contour's Envoy Service IP Address 
-## Setup A Record which points to the IP Address 
-## Make the A Record a wild card DNS 
-## Example: *.elasticsearch.mydomain.com ---> IP Address  
+3. Setup DNS to point to Project Contour's Envoy Service IP Address 
+``` Setup A Record which points to the IP Address 
+    Make the A Record a wild card DNS 
+    Example: *.elasticsearch.mydomain.com ---> IP Address 
+```
 
-### Fetch the Elasticsearch Helm Chart to make changes 
-### https://github.com/elastic/helm-charts/tree/master/elasticsearch
+4.  Now Fetch the Elasticsearch Helm Chart to make changes 
+* https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
 ```helm fetch elastic/elasticsearch --untar```
 
-### Change Directories to Elasticsearch 
+5.  Change Directories to Elasticsearch 
 ```cd elasticsearch```
 
-### 
-### Open and edit the values.yaml file 
+6.  Open and edit the values.yaml file to include the storageClassName
 ### After line 92 add the following line.  
 
    ```storageClassName: pacific-gold-storage-policy```
  
 ### Example: 
-### volumeClaimTemplate:
-###   accessModes: [ "ReadWriteOnce" ]
-###   storageClassName: pacific-gold-storage-policy
-###   resources:
-###     requests:
-###       storage: 30Gi
- 
+```
+ volumeClaimTemplate:
+   accessModes: [ "ReadWriteOnce" ]
+   storageClassName: pacific-gold-storage-policy
+   resources:
+     requests:
+       storage: 30Gi
+```
 
-### Now navigate to the ingress class on line 235 
-### Change Ingress enabled to "true"
+7.  Now enable your ingress (if desired)
+   
+   * Change Ingress enabled to "true"
 
-### Uncomment the ingress.class annotation below and change nginx to contour 
+   * Uncomment the ingress.class annotation below and change nginx to contour 
 
-### Modify the Host variable to match your desired FQDN and the DNS entry which was setup earlier. 
+   * Modify the Host variable to match your desired FQDN and the DNS entry which was setup earlier. 
 
-# Match the following example below to include your backend service name and port.  
-# Example: 
-# ingress:
-#   enabled: true
-#   annotations: {
-#     kubernetes.io/ingress.class: contour } 
-#     # kubernetes.io/tls-acme: "true" 
-#   hosts:
-#     - host: dev.es.haas-401.pez.vmware.com 
-#       paths:
-#       - backend: 
-#           serviceName: elasticsearch-master
-#           servicePort: 9200
-#         path: /
-#   tls: []
-#   #  - secretName: chart-example-tls
-#   #    hosts:
-#   #      - chart-example.local
-
+ Match the following example below to include your backend service name and port.  
+ Example: 
+ ingress:
+   enabled: true
+   annotations: {
+     kubernetes.io/ingress.class: contour } 
+   hosts:
+     - host: dev.es.haas-401.pez.vmware.com 
+       paths:
+       - backend: 
+           serviceName: elasticsearch-ingest
+           servicePort: 9200
+         path: /
 
 
 # Now save and Close the file 
