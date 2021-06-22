@@ -1,4 +1,3 @@
-# elasticsearch-helm-tanzu
 Setup Elasticsearch via Helm Chart using Project Contour ingress 
 
 # Provision TKG Cluster  
@@ -94,4 +93,3 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 
 # helm install elk . -n elk  --set global.storageClass=pacific-gold-storage-policy
-
