@@ -27,8 +27,8 @@
 ```cd elasticsearch```
 
 6.  Open and edit the values.yaml file to include the storageClassName
-### After line 92 add the following line.  
-
+   
+    After line 92 add the following line.  
    ```storageClassName: pacific-gold-storage-policy```
  
 ### Example: 
@@ -50,7 +50,9 @@
    * Modify the Host variable to match your desired FQDN and the DNS entry which was setup earlier. 
 
  Match the following example below to include your backend service name and port.  
- Example: 
+
+ ### Example: 
+ ```
  ingress:
    enabled: true
    annotations: {
@@ -62,30 +64,22 @@
            serviceName: elasticsearch-ingest
            servicePort: 9200
          path: /
+```
+8. Now save, close and make duplicates of this values.yaml file for your various elasticsearch roles
+   (ie. Master, Data, ML, Coordinating-Only)
+   Make a copy of the values.yaml file and call it master-values.yaml for the master node roles.   
 
+9. Create Namespace for Elasticsearch 
+```kubectl create ns elk ```
 
-# Now save and Close the file 
-# Make a copy of the values.yaml file and call it master-values.yaml
+10. Deploy Elasticsearch to test basic setup functionality 
 
-# Create Namespace for Elasticsearch 
-kubectl create ns elk 
+```helm install elk . -n elk  -f master-values.yaml```
 
-# Deploy Elasticsearch to test basic setup functionality 
-
-helm install elk . -n elk  -f master-values.yaml
-
-# Your Elasticsearch Master nodes should now appear.   
-# Example: 
-# jamesro@jamesro-a01 elasticsearch % kubectl get pods --namespace=elk -l app=elasticsearch-master -w
-# NAME                     READY   STATUS    RESTARTS   AGE
-# elasticsearch-master-0   1/1     Running   0          8m38s
-
-
-# Create Cert 
-
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
-
-
-
-
-# helm install elk . -n elk  --set global.storageClass=pacific-gold-storage-policy
+    Your Elasticsearch Master nodes should now appear.   
+### Example: 
+```
+ jamesro@jamesro-a01 elasticsearch % kubectl get pods --namespace=elk -l app=elasticsearch-master -w
+ NAME                     READY   STATUS    RESTARTS   AGE
+ elasticsearch-master-0   1/1     Running   0          8m38s
+```
