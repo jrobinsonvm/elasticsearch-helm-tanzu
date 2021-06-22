@@ -1,16 +1,17 @@
 # Setup Elasticsearch via Helm Chart using Project Contour ingress 
 
-### Provision TKG Cluster  
+* Provision TKG Cluster  
 
-### Login to TKG Cluster 
+* Login to TKG Cluster 
 
-### Create cluster role binding to allow workload deployments 
 
-kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated
+Create cluster role binding to allow workload deployments 
+
+```kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated```
 
 
 ### Deploy Project Contour: 
-kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
+```kubectl apply -f https://projectcontour.io/quickstart/contour.yaml```
 
 ### Setup DNS to point to Project Contour's Envoy Service IP Address 
 ### Setup A Record which points to the IP Address 
@@ -20,10 +21,10 @@ kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 ### Fetch the Elasticsearch Helm Chart to make changes 
 ### https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
-helm fetch elastic/elasticsearch --untar
+```helm fetch elastic/elasticsearch --untar```
 
 ### Change Directories to Elasticsearch 
-cd elasticsearch
+```cd elasticsearch```
 
 ### 
 ### Open and edit the values.yaml file 
