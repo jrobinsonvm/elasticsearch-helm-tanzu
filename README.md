@@ -5,18 +5,17 @@
 * Login to TKG Cluster 
 
 
-Create cluster role binding to allow workload deployments 
-
+1. Create cluster role binding to allow workload deployments 
 ```kubectl create clusterrolebinding psp:authenticated --clusterrole=psp:vmware-system-privileged --group=system:authenticated```
 
 
-### Deploy Project Contour: 
+2. Deploy Project Contour: 
 ```kubectl apply -f https://projectcontour.io/quickstart/contour.yaml```
 
-### Setup DNS to point to Project Contour's Envoy Service IP Address 
-### Setup A Record which points to the IP Address 
-### Make the A Record a wild card DNS 
-### Example: *.elasticsearch.mydomain.com ---> IP Address  
+## Setup DNS to point to Project Contour's Envoy Service IP Address 
+## Setup A Record which points to the IP Address 
+## Make the A Record a wild card DNS 
+## Example: *.elasticsearch.mydomain.com ---> IP Address  
 
 ### Fetch the Elasticsearch Helm Chart to make changes 
 ### https://github.com/elastic/helm-charts/tree/master/elasticsearch
