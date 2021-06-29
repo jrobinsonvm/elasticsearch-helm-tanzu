@@ -136,3 +136,9 @@ helm install kibana . -n elk
 ```
 curl -k http://Elasticsearch-IP-Address-OR-FQDN:9200/_cat/indices
 ```
+
+Run the following command to list all nodes part of the cluster.  
+
+```
+curl -k http://10.213.208.70:9200/_cat/nodes
+```
