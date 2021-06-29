@@ -121,7 +121,18 @@ cd kibana
 3.  Edit the values.yaml file to point to your elasticsearch hosts 
 
 ```
-elasticsearchHosts: "http://<IP-Address-OR-FQDN>:9200"   #changeme
+elasticsearchHosts: "http://<Elasticsearch-IP-Address-OR-FQDN>:9200"   #changeme
 ```
 
+4.  After saving and closing the file above we are now ready to deploy kibana.   
+    To deploy kibana run the following command.  
+    
+```
+helm install kibana . -n elk   
+```
 
+5.  Verify your Kibana installation with the following curl command
+
+```
+curl -k http://Elasticsearch-IP-Address-OR-FQDN:9200/_cat/indices
+```
