@@ -118,3 +118,10 @@ helm fetch elastic/kibana --version 7.11.1  --untar
 cd kibana
 ```
 
+3.  Edit the values.yaml file to point to your elasticsearch hosts 
+
+```
+elasticsearchHosts: "http://<IP-Address-OR-FQDN>:9200"   #changeme
+```
+
+
