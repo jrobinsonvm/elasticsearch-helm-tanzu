@@ -1,9 +1,10 @@
-# Setup Elasticsearch via Helm Chart using Project Contour ingress 
+# Setup Elasticsearch and Kibana via Helm Chart using Project Contour ingress 
 
 * Provision TKG Cluster  
 
 * Login to TKG Cluster 
 
+## Elasticsearch Setup 
 
 1. Create cluster role binding to allow workload deployments 
 ```
@@ -25,8 +26,10 @@ kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 4.  Now Fetch the Elasticsearch Helm Chart to make changes 
 * https://github.com/elastic/helm-charts/tree/master/elasticsearch
 
+
+The example below will pull version 7.11.1 
 ```
-helm fetch elastic/elasticsearch --untar
+helm fetch elastic/elasticsearch  --version 7.11.1 --untar
 ```
 
 5.  Change Directories to Elasticsearch 
@@ -97,4 +100,39 @@ Your Elasticsearch Master nodes should now appear.
  jamesro@jamesro-a01 elasticsearch % kubectl get pods --namespace=elk -l app=elasticsearch-master -w
  NAME                     READY   STATUS    RESTARTS   AGE
  elasticsearch-master-0   1/1     Running   0          8m38s
+```
+
+## Kibana Setup 
+
+
+1.  Now Fetch the Kibana Helm Chart to make changes 
+* https://github.com/elastic/helm-charts/tree/master/kibana
+
+The example below will pull version 7.11.1 
+```
+helm fetch elastic/kibana --version 7.11.1  --untar
+```
+
+2.  Change Directories to kibana 
+```
+cd kibana
+```
+
+3.  Edit the values.yaml file to point to your elasticsearch hosts 
+
+```
+elasticsearchHosts: "http://<Elasticsearch-IP-Address-OR-FQDN>:9200"   #changeme
+```
+
+4.  After saving and closing the file above we are now ready to deploy kibana.   
+    To deploy kibana run the following command.  
+    
+```
+helm install kibana . -n elk   
+```
+
+5.  Verify your Kibana installation with the following curl command
+
+```
+curl -k http://Elasticsearch-IP-Address-OR-FQDN:9200/_cat/indices
 ```
